@@ -6,7 +6,7 @@ from methods.proposed import proposed_model
 from helpers.helper_fcts import EncodedToTensor, Normalize, ScaleImage, PadInput
 
 
-img = 'FPWW0180619_RGB1_20170420_165439_6'
+img = 'FPWW0180049_RGB1_20170303_133243_6'
 
 image_path = f'data/validation/{img}.png'
 mask_path = f'data/validation/{img}_mask.png'
