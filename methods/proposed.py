@@ -25,7 +25,7 @@ class Proposed(base.BenchmarkMethod):
 
         self.model = proposed_model()
 
-        self.epochs = 5 # CHANGE TO 150 FOR THE REAL RUN
+        self.epochs = 150
         self.batchsize = 16
         self.eval_batchsize = 4
 
