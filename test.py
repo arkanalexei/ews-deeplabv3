@@ -1,17 +1,11 @@
 import torch
+import glob
+import os
 
 from methods.proposed import proposed_model
 from methods import base
 from helpers.helpers_test import extract_metadata, transform_image, visualize_results
 
-
-img = 'FPWW0180049_RGB1_20170303_133243_6'
-image_path = f'data/validation/{img}.png'
-mask_path = f'data/validation/{img}_mask.png'
-
-image, metadata = base.BenchmarkMethod.read_image(image_path, rgb=True, metadata=True)
-mask = base.BenchmarkMethod.read_image(mask_path, rgb=False)
-image_transformed = transform_image(image)
 
 # Load the model
 model = proposed_model()
@@ -19,21 +13,35 @@ checkpoint = torch.load('best_model.pth', map_location='cpu')
 model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 
-# Extract metadata of training image
-iso, fnumber, exposure = extract_metadata(metadata)
+# Save output
+os.makedirs('results', exist_ok=True)
 
-# Prediction
-model_input = {
-    'image': image_transformed.to('cpu'),
-    'iso': iso,
-    'fnumber': fnumber,
-    'exposure': exposure
-}
+val_path = 'data/validation'
+val_paths = glob.glob(val_path + '/*6.png')
+mask_paths = glob.glob(val_path + '/*_mask.png')
+val_paths.sort()
+mask_paths.sort()
+all_paths = zip(val_paths, mask_paths)
 
-with torch.no_grad():
-    output = model(model_input)
-    print("output", output)
+for image_path, mask_path in all_paths:
+    # Load image
+    image, metadata = base.BenchmarkMethod.read_image(image_path, rgb=True, metadata=True)
+    mask = base.BenchmarkMethod.read_image(mask_path, rgb=False)
+    image_transformed = transform_image(image)
 
+    # Extract metadata of training image
+    iso, fnumber, exposure = extract_metadata(metadata)
 
-# Visualize original image and segmentation result
-visualize_results(image, mask, output)
+    # Prediction
+    model_input = {
+        'image': image_transformed.to('cpu'),
+        'iso': iso,
+        'fnumber': fnumber,
+        'exposure': exposure
+    }
+
+    with torch.no_grad():
+        output = model(model_input)
+
+    filename = os.path.basename(image_path).split('.')[0]
+    visualize_results(image, mask, output, filename)

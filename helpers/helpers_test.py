@@ -59,7 +59,7 @@ def extract_metadata(metadata):
 
     return iso, fnumber, exposure
 
-def visualize_results(image, mask, output):
+def visualize_results(image, mask, output, filename):
     """
     Visualize segmentation result and compare to original mask
 
@@ -67,6 +67,7 @@ def visualize_results(image, mask, output):
     image -- Original image
     mask -- Original image
     output -- Segmentation result
+    filename -- Filename to save the figure
     """
     fig, axes = plt.subplots(1, 3, figsize=(12, 6))
 
@@ -86,4 +87,5 @@ def visualize_results(image, mask, output):
     axes[2].set_title("Segmentation Result")
     axes[2].axis('off')
 
-    plt.show()
+    plt.savefig(f'results/{filename}.png')
+    plt.close(fig)
