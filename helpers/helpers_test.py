@@ -69,7 +69,7 @@ def visualize_results(image, mask, output, filename):
     output -- Segmentation result
     filename -- Filename to save the figure
     """
-    fig, axes = plt.subplots(1, 3, figsize=(12, 6))
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4))
 
     # Original Image
     axes[0].imshow(image)
@@ -87,5 +87,8 @@ def visualize_results(image, mask, output, filename):
     axes[2].set_title("Segmentation Result")
     axes[2].axis('off')
 
-    plt.savefig(f'results/{filename}.png')
+    plt.subplots_adjust(wspace=0.1, hspace=0)
+    fig.tight_layout(pad=1)
+
+    plt.savefig(f'results/{filename}.png', bbox_inches='tight')
     plt.close(fig)
