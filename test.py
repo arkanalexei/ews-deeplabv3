@@ -14,14 +14,12 @@ model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 
 # Save output
-os.makedirs('results', exist_ok=True)
-
-val_path = 'data/validation'
-val_paths = glob.glob(val_path + '/*6.png')
-mask_paths = glob.glob(val_path + '/*_mask.png')
-val_paths.sort()
+path = 'data/test'
+paths = glob.glob(path + '/*6.png')
+mask_paths = glob.glob(path + '/*_mask.png')
+paths.sort()
 mask_paths.sort()
-all_paths = zip(val_paths, mask_paths)
+all_paths = zip(paths, mask_paths)
 
 for image_path, mask_path in all_paths:
     # Load image
