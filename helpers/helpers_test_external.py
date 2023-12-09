@@ -73,5 +73,5 @@ def visualize_results_external(image, output, filename):
     plt.subplots_adjust(wspace=0.1, hspace=0)
     fig.tight_layout(pad=1)
 
-    plt.savefig(f'results-external/2/{filename}.png', bbox_inches='tight')
+    plt.savefig(f'results/external/{filename}.png', bbox_inches='tight')
     plt.close(fig)

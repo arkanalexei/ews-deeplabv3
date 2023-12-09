@@ -14,7 +14,7 @@ model.load_state_dict(checkpoint['model_state_dict'])
 model.eval()
 
 # Save output
-path = 'data/test-external/2/'
+path = 'data/external/'
 paths = glob.glob(path + '*.png')
 
 for image_path in paths:
