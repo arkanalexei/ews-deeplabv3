@@ -6,6 +6,25 @@ import matplotlib.pyplot as plt
 from helpers.helper_fcts import EncodedToTensor, Normalize, ScaleImage, PadInput
 
 
+# def crop_image(image_pil, target_size=(350, 350)):
+#     """
+#     Crop the image to the target size.
+
+#     Keyword arguments:
+#     image_pil -- The PIL image to crop.
+#     target_size -- The target size for cropping (width, height).
+#     """
+#     # Calculate dimensions for cropping
+#     width, height = image_pil.size
+#     left = (width - target_size[0])/2
+#     top = (height - target_size[1])/2
+#     right = (width + target_size[0])/2
+#     bottom = (height + target_size[1])/2
+
+#     # Crop the center of the image
+#     image_cropped = image_pil.crop((left, top, right, bottom))
+#     return image_cropped
+
 def resize_image(image_pil, target_size=(350, 350)):
     return image_pil.resize(target_size, Image.ANTIALIAS)
 
@@ -29,7 +48,7 @@ def transform_image_external(image):
     for transform in transforms:
         image_dict = transform(image_dict)
 
-    return image_dict['image'].unsqueeze(0)
+    return image_dict['image'].unsqueeze(0), image_pil
 
 
 def default_metadata():
@@ -73,5 +92,5 @@ def visualize_results_external(image, output, filename):
     plt.subplots_adjust(wspace=0.1, hspace=0)
     fig.tight_layout(pad=1)
 
-    plt.savefig(f'results/external/{filename}.png', bbox_inches='tight')
+    plt.savefig(f'results/manual/{filename}.png', bbox_inches='tight')
     plt.close(fig)

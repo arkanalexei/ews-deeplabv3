@@ -90,5 +90,5 @@ def visualize_results(image, mask, output, filename):
     plt.subplots_adjust(wspace=0.1, hspace=0)
     fig.tight_layout(pad=1)
 
-    plt.savefig(f'results/{filename}.png', bbox_inches='tight')
+    plt.savefig(f'results/augmented/{filename}.png', bbox_inches='tight')
     plt.close(fig)
